@@ -1,0 +1,170 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    background-color: #DAE8FC;/*BAC8D3*/
+}
+header{
+    width: 90%;
+    margin: auto;
+    margin-bottom: 0.5em;
+}
+.forum{
+    display: flex;
+}
+.logos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.logo{
+    width: 25%;
+    margin: 0;
+    display: inherit;
+    padding-right: 2%;
+}
+.headerhaut{
+    font-size: small;
+    color: beige;
+}
+.headerhaut input{
+    width: 80% !important;
+}
+.headerhaut a{
+    color: blueviolet;
+}
+.headerhaut a:hover{
+    color:brown ;
+}
+.nav-link, .nav-item{
+    margin-right: 1% !important;
+}
+.dropdown ul, li, a{
+    padding: 0 !important;
+    margin: 0 !important;
+    text-decoration: none;
+}
+.dropdown-menu.show{
+    background-color: #BAC8D3;
+}
+.hearderbas{
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    margin-top: 0.5em;
+}
+.hearderbas1{
+    border-radius: 10px 40px 40px 10px;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 25%;
+    color: beige;
+}
+.hearderbas2{
+    border-radius: 40px 10px 10px 40px;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 65%;
+    color: beige;
+}
+.hearderbas span{
+    font: lighter;
+    font: 10pt tahoma,verdana,geneva,lucida,lucida grande,arial,helvetica,sans-serif;
+} 
+#pied {
+    width: 90%;
+    text-align: center;
+	height: 4em;
+    font-size: x-small;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: beige;
+    margin: auto;
+}
+.nav-link{
+    color: beige !important;
+    font-size: small;
+}
+main{
+    width: 90%;
+    margin: auto;
+    background-color: #BAC8D3;
+}
+.navbar-nav, .navbar{
+    width: 100%;
+    padding: 0;
+}
+.inscription{
+    margin: auto;
+    width: 50%;
+}
+.inscription h2{
+    margin: auto;
+}
+.form-group input{
+    width: 60%;
+}
+.form-group select{
+    width: 60%;
+}
+#exampleCheck1{
+    width: 5% !important;
+    margin-top: .4rem;
+    left: 30%;
+    top: 100%;
+}
+.buttons{
+background-color: Transparent;
+background-repeat:no-repeat;
+color: white;
+cursor:pointer; 
+width: 100%;
+height: 30px;
+}
+.buttons :hover{
+    color: red;
+}
+.table-dark {
+    color: #fff;
+    background-color: #131319;
+}
+button.btn.btn-warning{
+    position: absolute;
+    right: 0;
+}
+div.form-group{
+    width: 80%;
+    margin: auto;
+    padding-bottom: 0.5em;
+    display: flex;
+    justify-content: space-around;
+}
+
+#page404{
+    width: 60%;
+}
+#pages{
+    display: flex; 
+    justify-content: center;
+    width:50% ; 
+    margin:auto; 
+}
+#pass{
+    display: none;
+}
+.colorer4{
+    font-style: italic;
+    background-color: #ffff00;
+}
+.colorer2{
+    font-style: italic;
+    background-color: #00ff88;
+}
+.colorer3{
+    font-style: italic;
+    background-color: #0044ff;
+}
+.colorer1{
+    font-style: italic;
+    background-color: #ff6600;
+}
