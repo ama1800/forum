@@ -1,6 +1,5 @@
 <?php
 namespace App;
-use App\Session;
 	
 	abstract class Upload{
 		

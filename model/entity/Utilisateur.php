@@ -6,7 +6,6 @@ class Utilisateur extends AbstractEntity{
     private $id;
     private $nom;
     private $dateadhesion;
-    private $pays;
     private $psuedo;
     private $email;
     private $avatar;
@@ -17,9 +16,8 @@ class Utilisateur extends AbstractEntity{
     private $categorie;
     private $message;
     private $prenom;
-    private $cp;
     private $adresse;
-    private $ville;
+    private $pays;
 
      public function __construct($data){
          $this->hydrate($data);
@@ -304,26 +302,6 @@ class Utilisateur extends AbstractEntity{
     }
 
     /**
-     * Get the value of cp
-     */ 
-    public function getCp()
-    {
-        return $this->cp;
-    }
-
-    /**
-     * Set the value of cp
-     *
-     * @return  self
-     */ 
-    public function setCp($cp)
-    {
-        $this->cp = $cp;
-
-        return $this;
-    }
-
-    /**
      * Get the value of adresse
      */ 
     public function getAdresse()
@@ -339,26 +317,6 @@ class Utilisateur extends AbstractEntity{
     public function setAdresse($adresse)
     {
         $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of ville
-     */ 
-    public function getVille()
-    {
-        return $this->ville;
-    }
-
-    /**
-     * Set the value of ville
-     *
-     * @return  self
-     */ 
-    public function setVille($ville)
-    {
-        $this->ville = $ville;
 
         return $this;
     }

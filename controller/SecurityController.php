@@ -64,8 +64,8 @@ use Model\Manager\UtilisateurManager;
                 $prenom = filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_STRING);
                 $datenaissance = filter_input(INPUT_POST, "datenaissance");
                 $avatar = filter_input(INPUT_POST, "avatar", FILTER_SANITIZE_STRING);
-                $cp= filter_input(INPUT_POST, "cp", FILTER_SANITIZE_STRING); 
-                $ville= filter_input(INPUT_POST, "ville", FILTER_SANITIZE_STRING);
+                $pays= filter_input(INPUT_POST, "pays", FILTER_SANITIZE_STRING); 
+                // $ville= filter_input(INPUT_POST, "ville", FILTER_SANITIZE_STRING);
                 $adresse = filter_input(INPUT_POST, "adresse", FILTER_SANITIZE_STRING);
                 
 
@@ -80,7 +80,7 @@ use Model\Manager\UtilisateurManager;
                         if(!$user)
                         {
                             $password = password_hash($password, PASSWORD_BCRYPT);
-                            $array=["psuedo"=>$psuedo,"email"=>$email,"password"=>$password,"nom"=>$nom,"prenom"=>$prenom,"datenaissance"=>$datenaissance,"avatar"=>$avatar,"cp"=>$cp,"ville"=>$ville,"adresse"=>$adresse];
+                            $array=["psuedo"=>$psuedo,"email"=>$email,"password"=>$password,"nom"=>$nom,"prenom"=>$prenom,"datenaissance"=>$datenaissance,"avatar"=>$avatar,"adresse"=>$adresse, "pays"=>$pays];
 
                             if($manager->addUser($array))
                             {

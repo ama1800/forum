@@ -12,161 +12,309 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
--- Listage de la structure de la base pour forum
-CREATE DATABASE IF NOT EXISTS `forum` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `forum`;
+-- Listage de la structure de la base pour cinema
+CREATE DATABASE IF NOT EXISTS `cinema` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `cinema`;
 
--- Listage de la structure de la table forum. categorie
-CREATE TABLE IF NOT EXISTS `categorie` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `verouillage` int(11) DEFAULT NULL,
-  `nomcategorie` longtext NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+-- Listage de la structure de la table cinema. acteur
+CREATE TABLE IF NOT EXISTS `acteur` (
+  `id_acteur` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_acteur` varchar(50) NOT NULL,
+  `prenom_acteur` varchar(50) NOT NULL,
+  `sexe` char(50) NOT NULL DEFAULT '',
+  `date_naissance` date NOT NULL,
+  PRIMARY KEY (`id_acteur`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table forum.categorie : ~3 rows (environ)
-/*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
-INSERT INTO `categorie` (`id`, `verouillage`, `nomcategorie`) VALUES
-	(1, 0, 'satellite');
-INSERT INTO `categorie` (`id`, `verouillage`, `nomcategorie`) VALUES
-	(2, 0, 'tnt');
-INSERT INTO `categorie` (`id`, `verouillage`, `nomcategorie`) VALUES
-	(3, 1, 'cable');
-/*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
+-- Listage des données de la table cinema.acteur : ~10 rows (environ)
+/*!40000 ALTER TABLE `acteur` DISABLE KEYS */;
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(1, 'jolie', 'jaquline', 'femme', '1948-09-15');
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(2, 'mourad', 'skirch', 'homme', '1999-12-15');
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(3, 'mathieu', 'guirin', 'homme', '1975-10-02');
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(4, 'nasser', 'belkebch', 'homme', '1960-10-28');
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(5, 'nora', 'touzi', 'femme', '1978-05-11');
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(6, 'tomo', 'lkrrak', 'femme', '1989-05-18');
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(7, 'soho', 'kawazaki', 'homme', '2005-01-09');
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(8, 'nouri', 'chourri', 'homme', '1955-01-01');
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(9, 'tayfoun', 'bolabi', 'homme', '2003-09-12');
+INSERT INTO `acteur` (`id_acteur`, `nom_acteur`, `prenom_acteur`, `sexe`, `date_naissance`) VALUES
+	(10, 'kaloucha', 'bowalia', 'femme', '2000-09-12');
+/*!40000 ALTER TABLE `acteur` ENABLE KEYS */;
 
--- Listage de la structure de la table forum. message
-CREATE TABLE IF NOT EXISTS `message` (
-  `id_message` int(11) NOT NULL AUTO_INCREMENT,
-  `utilisateur_id` int(11) NOT NULL,
-  `sujet_id` int(11) NOT NULL,
-  `titremessage` text,
-  `datecreation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `reponse` longtext,
-  PRIMARY KEY (`id_message`),
-  KEY `FK_POSTER` (`utilisateur_id`),
-  KEY `FK_REPONDRE` (`sujet_id`),
-  CONSTRAINT `FK_POSTER` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`),
-  CONSTRAINT `FK_REPONDRE` FOREIGN KEY (`sujet_id`) REFERENCES `sujet` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+-- Listage de la structure de la table cinema. appartient
+CREATE TABLE IF NOT EXISTS `appartient` (
+  `id_genre` int(11) NOT NULL,
+  `id_film` int(11) NOT NULL,
+  PRIMARY KEY (`id_genre`,`id_film`),
+  KEY `appartient_Film0_FK` (`id_film`),
+  CONSTRAINT `appartient_Film0_FK` FOREIGN KEY (`id_film`) REFERENCES `film` (`id_film`),
+  CONSTRAINT `appartient_Genre_FK` FOREIGN KEY (`id_genre`) REFERENCES `genre` (`id_genre`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Listage des données de la table forum.message : ~15 rows (environ)
-/*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(3, 1, 10, 'nouvelle frequence', '2020-10-08 09:53:42', '            changement de frequence de chaine x passe en 15200            ');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(4, 3, 10, 'test', '2020-10-14 11:05:00', 'test test         ');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(6, 5, 2, 'ça roule...!', '2020-10-14 16:17:46', 'oui je confirme!');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(8, 4, 4, 'avec un chariot', '2020-10-07 21:57:37', 'est s possible?');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(9, 1, 10, 'ce ci n&#39;est pas un test ', '2020-10-07 21:57:37', 'Attention attention ... c&#39;est sérieux!!      ');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(10, 23, 13, 'ceci n\'est plus un test', '2020-10-25 14:40:06', 'oui ça marchera incha Allah..');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(12, 1, 10, 'test3', '2020-10-25 14:42:21', '            cette fois il faut que ça marche alhamdo lillAllah            ');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(13, 1, 12, 'test', '2020-10-25 15:43:49', 'abdollah me derange je ne peut pas travail tranquillement. je ne sais pas quoi faire avec lui, en effet il n&#39;ecoute pas wak wak wak wak');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(14, 1, 10, 'test', '2020-10-25 15:49:40', 'ok ok comme ça marche ecrivant un message lisible    ');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(15, 1, 10, 'ça arrive ', '2020-10-25 23:00:15', 'il faut s&#39;y attendre la vie n&#39;est pas toujours roses, y a l&#39;automne aussi!?');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(16, 1, 14, 'premier message', '2020-10-26 10:41:42', 'kolo mollo tokki rien');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(17, 1, 14, 'test token', '2020-10-26 15:05:00', 'c&#39;est ça passe c&#39;est que ça marche');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(18, 27, 10, 'je suis la', '2020-10-31 00:11:59', '            oui moi aussi');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(19, 1, 10, 'test pagination', '2020-11-01 21:47:31', 'test pagination            ');
-INSERT INTO `message` (`id_message`, `utilisateur_id`, `sujet_id`, `titremessage`, `datecreation`, `reponse`) VALUES
-	(20, 1, 10, '2éme test', '2020-11-01 21:48:57', 'test pagination acte 2            ');
-/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+-- Listage des données de la table cinema.appartient : ~12 rows (environ)
+/*!40000 ALTER TABLE `appartient` DISABLE KEYS */;
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(2, 1);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(8, 2);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(2, 3);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(1, 4);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(6, 4);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(1, 5);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(4, 5);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(2, 6);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(7, 7);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(8, 8);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(3, 9);
+INSERT INTO `appartient` (`id_genre`, `id_film`) VALUES
+	(4, 10);
+/*!40000 ALTER TABLE `appartient` ENABLE KEYS */;
 
--- Listage de la structure de la table forum. sujet
-CREATE TABLE IF NOT EXISTS `sujet` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `utilisateur_id` int(11) NOT NULL,
-  `categorie_id` int(11) NOT NULL,
-  `titresujet` longtext NOT NULL,
-  `datecreation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `contenu` text NOT NULL,
-  `verrouillage` tinyint(4) NOT NULL DEFAULT '0',
-  `resolution` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `FK_CONTENIR` (`categorie_id`),
-  KEY `FK_CREER` (`utilisateur_id`),
-  CONSTRAINT `FK_CONTENIR` FOREIGN KEY (`categorie_id`) REFERENCES `categorie` (`id`),
-  CONSTRAINT `FK_CREER` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+-- Listage de la structure de la table cinema. casting
+CREATE TABLE IF NOT EXISTS `casting` (
+  `id_film` int(11) NOT NULL,
+  `id_acteur` int(11) NOT NULL,
+  `id_role` int(11) NOT NULL,
+  PRIMARY KEY (`id_film`,`id_acteur`,`id_role`),
+  KEY `casting_Acteur0_FK` (`id_acteur`),
+  KEY `casting_Role1_FK` (`id_role`),
+  CONSTRAINT `casting_Acteur0_FK` FOREIGN KEY (`id_acteur`) REFERENCES `acteur` (`id_acteur`),
+  CONSTRAINT `casting_Film_FK` FOREIGN KEY (`id_film`) REFERENCES `film` (`id_film`),
+  CONSTRAINT `casting_Role1_FK` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Listage des données de la table forum.sujet : ~9 rows (environ)
-/*!40000 ALTER TABLE `sujet` DISABLE KEYS */;
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(1, 1, 1, 'nouvelle mise a jour x', '2020-10-07 21:52:21', 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat', 0, 0);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(2, 1, 1, 'frequences hotbird', '2020-10-07 21:55:00', 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?', 0, 1);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(3, 3, 1, 'peut on recevoir astra 19 au sud de mali?', '2020-10-07 21:54:44', 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.', 1, 1);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(4, 1, 3, 'Bouquet free', '2020-10-07 21:55:17', 'On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains', 0, 0);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(10, 5, 1, 'technosat bloquer sur Boot', '2020-10-08 09:34:55', ' On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains', 0, 0);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(11, 1, 2, 'mamamai', '2020-10-25 02:32:39', ' lorem ipsum polikum rimum kitamum', 0, 0);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(12, 1, 2, 'mise a jour', '2020-10-25 03:54:23', 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et ', 0, 0);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(13, 5, 3, 'mamamai', '2020-10-25 04:28:30', ' lorem ipsum polikum rimum kitamum', 0, 0);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(14, 1, 3, 'çà pourrais', '2020-10-26 10:40:58', '                        je ne sais pas pourquoi!!        test token                ', 0, 0);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(15, 1, 3, 'ceci pour tester pagination', '2020-10-30 20:50:01', 'ceci pour tester pagination, ça marche mais y a un probleme quel categorie a choisir', 0, 0);
-INSERT INTO `sujet` (`id`, `utilisateur_id`, `categorie_id`, `titresujet`, `datecreation`, `contenu`, `verrouillage`, `resolution`) VALUES
-	(16, 1, 3, 'encore un test', '2020-10-30 20:55:03', 'oui oui forum under construction!!!', 0, 0);
-/*!40000 ALTER TABLE `sujet` ENABLE KEYS */;
+-- Listage des données de la table cinema.casting : ~18 rows (environ)
+/*!40000 ALTER TABLE `casting` DISABLE KEYS */;
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(1, 1, 4);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(8, 1, 11);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(1, 2, 3);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(4, 2, 9);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(2, 3, 1);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(4, 3, 9);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(3, 4, 1);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(3, 4, 2);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(1, 5, 5);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(5, 5, 3);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(1, 7, 13);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(4, 7, 9);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(7, 7, 14);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(2, 8, 6);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(5, 8, 13);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(4, 10, 5);
+INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(5, 10, 10);
+/*!40000 ALTER TABLE `casting` ENABLE KEYS */;
 
--- Listage de la structure de la table forum. utilisateur
-CREATE TABLE IF NOT EXISTS `utilisateur` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `psuedo` varchar(255) NOT NULL DEFAULT '',
-  `email` varchar(255) NOT NULL DEFAULT '',
-  `password` varchar(255) NOT NULL DEFAULT '',
-  `nom` varchar(50) DEFAULT NULL,
-  `prenom` varchar(50) DEFAULT NULL,
-  `datenaissance` date DEFAULT NULL,
-  `dateadhesion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `role` int(11) NOT NULL DEFAULT '5',
-  `avatar` varchar(255) NOT NULL,
-  `pays` varchar(50) NOT NULL DEFAULT 'france',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+-- Listage de la structure de la table cinema. film
+CREATE TABLE IF NOT EXISTS `film` (
+  `id_film` int(11) NOT NULL AUTO_INCREMENT,
+  `titre` varchar(50) NOT NULL,
+  `annee` year(4) NOT NULL,
+  `note` int(5) NOT NULL,
+  `synopsis` text NOT NULL,
+  `affiche` varchar(255) NOT NULL,
+  `id_real` int(11) NOT NULL,
+  `duree` time NOT NULL DEFAULT '00:00:00',
+  PRIMARY KEY (`id_film`),
+  KEY `Film_Realisateur_FK` (`id_real`),
+  CONSTRAINT `Film_Realisateur_FK` FOREIGN KEY (`id_real`) REFERENCES `realisateur` (`id_real`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table forum.utilisateur : ~11 rows (environ)
-/*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(1, 'ama1800', 'Ama1800@exemple.com', '$2y$10$4gkmEJVcYUgLeOj9iz5ZlucnWql1knfFkZKBxPr/X/gq2zu7Nj9FC', 'ait', 'ahmed', '1979-10-07', '2017-10-07 00:00:00', 1, 'logo.png', 'maroc');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(3, 'cooly', 'cool@mail.fr', '$2y$10$gx1q66BcpdjXTiYK1CqRh.BcRsm/Mo.HuqBVeYp6baocb3uAiCUIO', 'llllll', 'molllu', '2000-10-18', '2020-10-17 00:00:00', 5, 'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-256.png', 'france');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(4, 'johndoe', 'test@mail.com', '$2y$10$B/ImR.AANb4QlmW.p3jwmeN.vNTZuFVBrsSDEN6bh/GJLbiKQ70GG', '', '', '1988-03-25', '2005-05-03 00:00:00', 2, 'https://thumbs.dreamstime.com/z/user-sign-icon-person-symbol-human-avatar-rich-man-84519083.jpg', 'italie');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(5, 'mathieu', 'mail@mail.fr', '$2y$10$F0aZUl1sz9.MEdzvBiZY8.Xp8A1.MmRkkKsMNwIpeiAmI8.xVbztu', 'mott', 'math', '2001-08-25', '2011-11-27 00:00:00', 4, 'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-256.png', 'france');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(20, 'ama1803', 'molli@hotlolo.com1', '$2y$10$17HPjGbfDECvORNN/I2jcOxgLENG1QNQngmIc6ysuoouGdE//2N3u', 'qqqqqqq', 'qqqqqqqq', '2000-02-02', '2020-10-25 01:30:12', 5, 'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-256.png', 'france');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(22, 'ama1804', 'ama1800@exemple.com1', '$2y$10$AZIsjeoXE5B.6qnaPqXJcOULBO5KUeZGv9uvykbtpLxgbjB5wYXZa', 'rotti', 'mayo', '2000-02-01', '2020-10-25 01:30:14', 5, 'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-256.png', 'france');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(23, 'Abdollah', 'abdollah@test.fr', '$2y$10$vIyI5QGRzuVLXejaQ4Oj.eRy.uK/dAEyV6q9TLEO8EVhRMWjvn4uS', 'ait', 'abdollah', '2016-10-15', '2020-10-25 13:10:22', 3, 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.-uY5mrhkpTMrVuapqL2nDAHaHW%26pid%3DApi&f=1', 'france');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(24, 'salma', 'salma@test.fr', '$2y$10$J5O9gjA4YK4ReSrfb.5.6uWZZ4cXW.TU0H92GG7zrw/er8RmXK8DC', 'ait', 'salma', '2015-06-28', '2020-10-25 13:13:13', 2, 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2Fjp1U0NargtQ%2Fmaxresdefault.jpg&f=1&nofb=1', 'france');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(25, 'mala', 'mala@moi.fr', '$2y$10$xw91IUqlUNOXZ5ttS14Hzu/sLJIkTaDlL333r4LPmWRUC0USPNTvK', 'toi', 'moi', '1999-01-01', '2020-10-26 14:01:48', 4, 'https://thumbs.dreamstime.com/z/user-sign-icon-person-symbol-human-avatar-rich-man-84519083.jpg', 'france');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(26, 'powerZ', 'marouane@test.fr', '$2y$10$KBy4mSphMrQQTvERAwUfDeEcYeyNBzXlsKVXVM.hbGQ/yH5L1fh82', 'kommiche', 'marouane', '2000-01-01', '2020-10-26 14:30:45', 4, 'logo1.png', 'france');
-INSERT INTO `utilisateur` (`id`, `psuedo`, `email`, `password`, `nom`, `prenom`, `datenaissance`, `dateadhesion`, `role`, `avatar`, `pays`) VALUES
-	(27, 'lion67', 'motama@test.de', '$2y$10$qOhMRb4BvnbAXFh2oyVjz.6HX03fqb0XigkG02TBeKU36F3WP1edC', 'darmien', 'lyon', '2000-01-01', '2020-10-26 15:08:47', 3, 'https://thumbs.dreamstime.com/z/user-sign-icon-person-symbol-human-avatar-rich-man-84519083.jpg', 'france');
-/*!40000 ALTER TABLE `utilisateur` ENABLE KEYS */;
+-- Listage des données de la table cinema.film : ~10 rows (environ)
+/*!40000 ALTER TABLE `film` DISABLE KEYS */;
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(1, 'couco', '2003', 3, 'matin ensolille des coucou qui saut par tout', 'https://www.premiere.fr/sites/default/files/styles/scale_crop_336x486/public/plurimedia_import/7_1324475.jpg', 5, '01:55:00');
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(2, 'matuzami', '2015', 2, 'matuzami jeune partie en vacance il decide d\'y rester', 'https://media.senscritique.com/media/000019174841/325/L_Appel_de_la_foret.jpg', 5, '02:30:00');
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(3, 'foot', '2020', 4, 'match de foot qui provoque une guerre mondile qui s\'achéve lorsque l\'arbitre l\'a decider', 'https://img-4.linternaute.com/nJJJieUhKc0YjlMSVWkAY8_nItU=/405x540/d7d61959cda54f8aa45d4ef495fc202e/ccmcms-linternaute/186953.jpg', 10, '02:20:00');
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(4, 'jungle', '2018', 4, 'la vie mouvementer en jungle ou le plus fort devore le faible', 'https://fr.web.img5.acsta.net/pictures/19/12/04/15/26/0979818.jpg', 1, '01:50:00');
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(5, 'samuel passe lui la sauce', '2012', 2, 'un pere de famille essaye d\'apprendre a ces enfants les bonnes maniere. mais ..', 'https://www.france.tv/image/vignette_3x4/346/461/7/m/i/d5f5fcfc-phpu5gim7.jpg', 1, '01:45:00');
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(6, 'loli', '2019', 4, 'loli jeune femme qui se marie, et realise commen sa vie va mieux jusqu\'ou...', 'https://fr.web.img5.acsta.net/pictures/20/01/23/09/02/1428612.jpg', 2, '02:25:00');
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(7, 'rue droite', '2001', 4, 'rue longue plein de monde et d\'evenements surpprises', 'https://media.senscritique.com/media/000018630904/source_big/Once_Upon_a_Time_in_Hollywood.jpg', 13, '02:25:00');
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(8, 'un matin', '1955', 4, 'histoire d\'amour qui voit le jour un matin sombre', 'https://www.mariefrance.fr/wp-content/uploads/sites/5/2018/08/will-hunting-286x410.jpg', 12, '02:25:00');
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(9, 'envoyer par php', '2012', 5, 'apres un combat achaarrné.. php a finalement ceder et le film et ajouter avec succe', 'https://kevinfolio.com/img/php.jpg', 4, '02:33:00');
+INSERT INTO `film` (`id_film`, `titre`, `annee`, `note`, `synopsis`, `affiche`, `id_real`, `duree`) VALUES
+	(10, 'casser les oeufs', '2020', 4, 'deux œufs qui se battent. Du coup se termine en omelette.', 'https://www.cchobby.fr/media/catalog/product/cache/8/image/9df78eab33525d08d6e5fb8d27136e95/v/1/v15282.jpg', 13, '01:55:00');
+/*!40000 ALTER TABLE `film` ENABLE KEYS */;
+
+-- Listage de la structure de la table cinema. genre
+CREATE TABLE IF NOT EXISTS `genre` (
+  `id_genre` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_genre` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_genre`),
+  UNIQUE KEY `nom_genre` (`nom_genre`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table cinema.genre : ~10 rows (environ)
+/*!40000 ALTER TABLE `genre` DISABLE KEYS */;
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(1, 'Action');
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(4, 'Animation');
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(8, 'aventure');
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(12, 'Classic');
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(7, 'comedie');
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(2, 'Drame');
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(3, 'famille');
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(5, 'Fiction');
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(9, 'histoire');
+INSERT INTO `genre` (`id_genre`, `nom_genre`) VALUES
+	(6, 'Suspense');
+/*!40000 ALTER TABLE `genre` ENABLE KEYS */;
+
+-- Listage de la structure de la table cinema. realisateur
+CREATE TABLE IF NOT EXISTS `realisateur` (
+  `id_real` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_realisateur` varchar(50) NOT NULL,
+  `prenom_realisateur` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_real`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table cinema.realisateur : ~12 rows (environ)
+/*!40000 ALTER TABLE `realisateur` DISABLE KEYS */;
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(1, 'kommi', 'jommi');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(2, 'mathias', 'zombiz');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(3, 'Nattan', 'Chorer');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(4, 'serio', 'serge');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(5, 'coustco', 'manuel');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(6, 'rico', 'lorent');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(7, 'myrie', 'renisse');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(9, 'passo', 'jarisse');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(10, 'toto', 'roland');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(11, 'mourad', 'skirch');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(12, 'nora', 'touzi');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(13, 'kaloucha', 'bowalia');
+INSERT INTO `realisateur` (`id_real`, `nom_realisateur`, `prenom_realisateur`) VALUES
+	(14, 'Mattata', 'Hakona');
+/*!40000 ALTER TABLE `realisateur` ENABLE KEYS */;
+
+-- Listage de la structure de la table cinema. role
+CREATE TABLE IF NOT EXISTS `role` (
+  `id_role` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_role` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_role`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table cinema.role : ~13 rows (environ)
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(1, 'cowbow');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(2, 'Policier');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(3, 'jean marque');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(4, 'jolie jannette');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(5, 'directrice');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(6, 'le voleur');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(8, 'batman');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(9, 'superman');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(10, 'battwomen');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(11, 'tariq');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(13, 'fontome');
+INSERT INTO `role` (`id_role`, `nom_role`) VALUES
+	(14, 'boxeur');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+
+-- Listage de la structure de la table cinema. user
+CREATE TABLE IF NOT EXISTS `user` (
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `psuedo` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `nom` varchar(255) DEFAULT NULL,
+  `prenom` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_user`),
+  KEY `psuedo` (`psuedo`,`email`),
+  KEY `email` (`email`,`psuedo`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table cinema.user : ~7 rows (environ)
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`id_user`, `psuedo`, `password`, `email`, `nom`, `prenom`) VALUES
+	(1, 'ama1800', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 'ama12@exemple.fr', 'hamed', 'ahmed');
+INSERT INTO `user` (`id_user`, `psuedo`, `password`, `email`, `nom`, `prenom`) VALUES
+	(2, 'ama1801', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 'cool@boul.tr', 'kolli', 'ahmed');
+INSERT INTO `user` (`id_user`, `psuedo`, `password`, `email`, `nom`, `prenom`) VALUES
+	(3, '1802', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 'cool11@boul.tr', 'amo', 'timo');
+INSERT INTO `user` (`id_user`, `psuedo`, `password`, `email`, `nom`, `prenom`) VALUES
+	(4, 'ama1800', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 'cool@boul.tr', 'hamed', 'ahmed');
+INSERT INTO `user` (`id_user`, `psuedo`, `password`, `email`, `nom`, `prenom`) VALUES
+	(5, 'ama1800', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 'cool@boul.tr', 'hamed', 'ahmed');
+INSERT INTO `user` (`id_user`, `psuedo`, `password`, `email`, `nom`, `prenom`) VALUES
+	(6, 'ama1802', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'ama1@exemple.fr', 'amott', 'ahmed');
+INSERT INTO `user` (`id_user`, `psuedo`, `password`, `email`, `nom`, `prenom`) VALUES
+	(7, 'ama1800', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 'ama1800@exemple.fr', 'hamed', 'ahmed');
+INSERT INTO `user` (`id_user`, `psuedo`, `password`, `email`, `nom`, `prenom`) VALUES
+	(8, 'ama1801', '25f9e794323b453885f5181f1b624d0b', 'ama10@exemple.fr', 'hamed', 'ahmed');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

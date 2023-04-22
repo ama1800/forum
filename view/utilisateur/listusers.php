@@ -19,7 +19,7 @@ $grades = $data['grades'];
                             $userpsuedo = $user->getPsuedo();
                             $userRole = $user->getRole();
                             $avatar = $user->getAvatar();
-                            $pays = strtoupper($user->getAdresse()." ".$user->getCp()." ".$user->getVille()." ".$user->getPays());
+                            $pays = strtoupper($user->getAdresse()."<br>".$user->getPays());
                             $datenaissance1 = new DateTime($user->getDatenaissance());
                             $datenaissance=$datenaissance1->format("d/m/Y"); ?>
 

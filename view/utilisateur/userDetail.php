@@ -48,9 +48,9 @@ $dateadhesion=$dateadhesion1->format("d/m/Y H:i");
                                         $id=$sujet->getId();
                                         $titre=$sujet->getTitresujet();?>
                                         <ul><li><a href="?ctrl=forum&method=showAllPostsByTopic&id=<?=$id?>"><?=$titre?></li></ul></a><?php }?></td>
-                                    <td><?= $user->getPays()?></td>
+                                    <td><?= strtoupper($user->getAdresse()." <br>".$user->getPays())?></td>
                                     <td><?= $dateadhesion?></td>
-                                <td><img style=" width: 50px; height: 50px;" src="<?= $user->getAvatar() ?>" alt="avatar"></td>
+                                <td><img style=" width: 50px; height: 50px;" src="<?= AVATAR_PATH .$user->getAvatar() ?>" alt="avatar"></td>
                                 <?php 
                                 if(!empty(Session::getUtilisateur())){
 

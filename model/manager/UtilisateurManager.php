@@ -75,7 +75,7 @@
     }
     public function addUser($array){
         $sql = "INSERT INTO  utilisateur
-                (psuedo, email, password, nom, prenom, datenaissance, avatar, cp, ville, adresse ) values (:psuedo, :email,:password, :nom, :prenom, :datenaissance, :avatar, :cp, :ville, :adresse )";
+                (psuedo, email, password, nom, prenom, datenaissance, avatar, adresse, pays ) values (:psuedo, :email,:password, :nom, :prenom, :datenaissance, :avatar, :adresse, :pays )";
                 self::create(
                     $sql,
                     $array,
@@ -94,7 +94,7 @@
     public function updateUser($array)
     {
         $sql= "UPDATE  utilisateur set 
-        psuedo=:psuedo, email=:email, nom=:nom, prenom=:prenom, datenaissance=:datenaissance, avatar=:avatar
+        psuedo=:psuedo, email=:email, nom=:nom, prenom=:prenom, datenaissance=:datenaissance, avatar=:avatar,  adresse=:adresse, pays=:pays 
         where id= :id";
         return self::update(
             $sql,

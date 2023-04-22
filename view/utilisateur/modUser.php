@@ -4,7 +4,7 @@ use App\Session;
    ?>
    <!-- <form action="" enctype="multipart/form-data" ></form> -->
 <h2>Mise à jour Profile</h2>
-    <form class="inscription" action="?ctrl=utilisateur&method=modUser&id=<?= $user->getId()?>" method="POST" enctypte="multipart/form-data">
+    <form class="inscription" action="?ctrl=utilisateur&method=modUser&id=<?= $user->getId()?>" method="POST" enctype="multipart/form-data">
         <div class="form-group"> 
           <input type="text" class="form-control" name="psuedo" id="psuedo" value=<?= $user->getPsuedo()?> required>
             <input type="date" class="form-control" name="datenaissance" id="datenaissance" value=<?= $user->getDatenaissance()?>>
@@ -33,11 +33,29 @@ use App\Session;
             }}
             ?>
           <div class="form-group">
-            <input type="file" class="form-control" name="avatar" id="avatar">
-          </div>
+            <input type="file" class="form-control" name="avatar" id="avatar"  value=<?= $user->getAvatar()?>>
+          </div><div class="form-group">
+        <input type="text" class="form-control" name="cp" id="cp" placeholder="CODE POSTAL">
+    </div>
+    <div class="form-group">
+        <select type="text" class="custom-select custom-select-sm" name="ville" id="ville" placeholder="VILLE">
+
+        </select>
+    </div>
+    <div class="form-group">
+        <input list="adresses" type="text" class="form-control" name="adresse" id="adresse" placeholder="Numéro puie le reste de l'adresse" value=<?= $user->getAdresse()?>>
+        <datalist id="adresses">
+
+        </datalist>
+    </div>
+    <div class="form-group">
+        <select type="text" class="custom-select custom-select-sm" name="pays" id="pays" placeholder="PAYS" value=<?= $user->getPays()?>>
+
+        </select>
+    </div>
           <div class="form-group">
-            <button type="submit" class="btn btn-primary">Mettre à jour</button><br>
             <input id="token" name="token" type="hidden" value=<?=$token?>><br>
+            <button type="submit" class="btn btn-primary">Mettre à jour</button><br>
           </div>
         </form>
 
