@@ -3,10 +3,10 @@
 
     abstract class DAO
     {
-        const DB_HOST = "ama18000.alwaysdata.net";
-        const DB_NAME = "ama18000_forum";
-        const DB_USER = "ama18000";
-        const DB_PASS = "Ama31513151.";
+        const DB_HOST = "localhost:3306";
+        const DB_NAME = "forum";
+        const DB_USER = "root";
+        const DB_PASS = "";
         const DB_CHARSET = "utf8";
         const DNS = 'mysql:host='.self::DB_HOST.';dbname='.self::DB_NAME .';charset='.self::DB_CHARSET;
 
