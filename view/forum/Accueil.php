@@ -4,7 +4,6 @@ use App\Session;
 // var_dump($nbm); die;
 // $nb=$nbm->getNbm();
 // die;
- var_dump($data['messages']);
 ?>
 <div id="page">
     <div class="headforum">

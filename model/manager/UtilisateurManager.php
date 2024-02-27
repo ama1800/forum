@@ -16,11 +16,11 @@
 
             $sql = "SELECT *
             FROM Utilisateur u
-            ORDER BY dateadhesion desc limit $pageActuel,$parPage";
+            ORDER BY dateadehison desc limit $pageActuel,$parPage";
 
             return self::getResults(
                 self::select($sql,
-                [$pageActuel,$parPage], 
+                null, 
                     true
                 ), 
                 self::$classname
@@ -75,7 +75,10 @@
     }
     public function addUser($array){
         $sql = "INSERT INTO  utilisateur
-                (psuedo, email, password, nom, prenom, datenaissance, avatar, adresse, pays ) values (:psuedo, :email,:password, :nom, :prenom, :datenaissance, :avatar, :adresse, :pays )";
+                (psuedo, email, password, nom, prenom, datenaissance, avatar, adresse, pays, role, dateadhesion) 
+                values 
+                (:psuedo, :email,:password, :nom, :prenom, :datenaissance, :avatar, :adresse, :pays, :role, :dateadhesion)";
+            var_dump($array);
                 self::create(
                     $sql,
                     $array,

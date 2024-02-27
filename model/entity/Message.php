@@ -1,6 +1,7 @@
 <?php
  namespace Model\Entity;
 use App\AbstractEntity;
+use DateTime;
 
 class Message extends AbstractEntity{
     private $id;
@@ -11,6 +12,8 @@ class Message extends AbstractEntity{
     private $nbm;
     private $categorie;
     private $sujet;
+    private $verouillage;
+    private $resolut;
 
      public function __construct($data){
          $this->hydrate($data);

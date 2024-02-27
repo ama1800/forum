@@ -1,6 +1,7 @@
 <?php
 use App\Session;
 $grades = $data['grades'];
+$users = $data['users'];
 // $colors = $data['colors'];
 ?>
 <div id="page">
@@ -11,17 +12,18 @@ $grades = $data['grades'];
                 <li>
                     <div class="list-group">
                         <?php 
-                        foreach ($data['users'] as $user) {
-                            $userNom = $user->getNom()." ".$user->getPrenom();
-                            $dateadhesion1 = new DateTime($user->getDateadhesion());
-                            $dateadhesion=$dateadhesion1->format("d/m/Y H:i");
+                        foreach ($users as $user) {
+                            $userNom = $user->getNom() ? $user->getNom()." ".$user->getPrenom() : "__";
+                            $dateadhesion = $user->getDateadhesion() ? new DateTime($user->getDateadhesion()) : "__";
+                            if($dateadhesion !== "__") $dateadhesion = $dateadhesion->format("d/m/Y H:i");
                             $userId = $user->getId();
                             $userpsuedo = $user->getPsuedo();
                             $userRole = $user->getRole();
                             $avatar = $user->getAvatar();
                             $pays = strtoupper($user->getAdresse()."<br>".$user->getPays());
-                            $datenaissance1 = new DateTime($user->getDatenaissance());
-                            $datenaissance=$datenaissance1->format("d/m/Y"); ?>
+                            $datenaissance = $user->getDatenaissance() ? new DateTime($user->getDatenaissance()) : "__";
+                            if($datenaissance !== "__") $datenaissance = $datenaissance->format("d/m/Y");
+                             ?>
 
                             <span><img style=" width: 50px; height: 50px;" src="<?= $avatar ?>" alt="avatar"></span>
                             <a style="color: ivory; font-size: larger" href="?ctrl=utilisateur&method=userDetail&id=<?= $userId ?>" class="list-group-item list-group-item-action active"><?= $userpsuedo ?></a>

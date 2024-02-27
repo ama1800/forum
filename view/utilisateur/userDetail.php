@@ -4,16 +4,17 @@ $grades = $data['grades'];
 // var_dump($data['messages'] );
 // var_dump($data['messages'] );
 $user = $data['user'];
-$datenaissance1 = new DateTime($user->getDatenaissance());
-$datenaissance=$datenaissance1->format("d/m/Y");
-$dateadhesion1 = new DateTime($user->getDateadhesion());
-$dateadhesion=$dateadhesion1->format("d/m/Y H:i");
+$datenaissance = $user->getDatenaissance() ? new DateTime($user->getDatenaissance()) : "__";
+if($datenaissance !== "__") $datenaissance = $datenaissance->format("d/m/Y");
+$dateadhesion = $user->getDateadhesion() ? new DateTime($user->getDateadhesion()) : "__";
+if($dateadhesion !== "__") $dateadhesion = $dateadhesion->format("d/m/Y H:i");
 ?>
+<div class="flash-message"></div>
 </div>
     <div class="headforum">
         <nav class="navbar navbar-inverse">
             <ul class="nav navbar-nav">
-                <li>User:</li>
+                <li>Membre: <?= $user->getPrenom(). " ". $user->getNom() ?> </li>
                 <div class="list-group">
                     <li>
                         <table class="table table-dark">

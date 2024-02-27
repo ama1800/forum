@@ -27,7 +27,7 @@
 
         public function listSujets($pageActuel,$parPage){
 
-            $sql = "SELECT s.id, titresujet, s.datecreation,contenu, verrouillage, s.utilisateur_id, psuedo, COUNT(m.id_message) AS nb
+            $sql = "SELECT s.id, titresujet, s.datecreation,contenu, verrouillage, s.utilisateur_id, psuedo, COUNT(m.id) AS nb
                     FROM sujet s
                     left join  utilisateur u
                     on s.utilisateur_id = u.id 
@@ -38,7 +38,7 @@
 
             return self::getResults(
                 self::select($sql,
-                [$pageActuel,$parPage], 
+                null, 
                     true
                 ), 
                 self::$classname
@@ -113,9 +113,9 @@
         }
         public function addTopic($array){
             $sql=" INSERT INTO  sujet 
-            (titresujet, contenu, categorie_id, utilisateur_id) 
+            (titresujet, contenu, categorie_id, utilisateur_id, datecreation) 
             values 
-            (:titresujet, :contenu, :categorie_id, :utilisateur_id)";
+            (:titresujet, :contenu, :categorie_id, :utilisateur_id, :datecreation)";
             return self::create(
                 $sql,
                 $array,

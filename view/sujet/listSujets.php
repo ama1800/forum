@@ -11,8 +11,8 @@ use App\Session;
                         <?php foreach ($data['sujets'] as $sujet) {
                             $sujetStatu = $sujet->getVerrouillage() == 0 ? '<img width="30" height="30" src="https://i.ibb.co/V3gstS3/ouvert.png" alt="ouvert" border="0" >'  : '<img width="30" height="30" src="https://i.ibb.co/gmmhQd6/fermer.png" alt="fermer" border="0" >';
                             $sujetNom = $sujet->getTitreSujet();
-                            $datecreation1 = new DateTime($sujet->getDatecreation());
-                            $datecreation=$datecreation1->format("d/m/Y H:i");
+                            $datecreation = $sujet->getDatecreation() ? new DateTime($sujet->getDatecreation()) : "__";
+                            if($datecreation !== "__") $datecreation = $datecreation->format("d/m/Y H:i");
                             $sujetId = $sujet->getId();
                             $sujetContenu = $sujet->getContenu();
                             $sujetNbMessage = $sujet->getNb();

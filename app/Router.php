@@ -33,9 +33,9 @@
             return $ctrl->$method();
         }
 
-        public static function redirectTo($ctrl = null, $method = null){
-
-            header("Location:?ctrl=".$ctrl."&method=".$method);
+        public static function redirectTo($ctrl = null, $method = null, $id = null){
+            $query = $id ? "?ctrl=".$ctrl."&method=".$method."&id=".$id : "?ctrl=".$ctrl."&method=".$method;
+            header("Location:?".$query);
             die();
            
         }

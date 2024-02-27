@@ -123,8 +123,8 @@ class UtilisateurController extends AbstractController
                 $manager = new UtilisateurManager();
                 $manager->deleteUser($id);
                 Router::redirectTo("forum", "latestUsers");
-            } else echo " Vous ne pouvez supprimer un compte qui n'est pas le votre";
-        } else echo " Veuillez vous connectez pour supprimer votre compte";
+            } else Session::addMessage('danger', "Vous ne pouvez supprimer un compte qui n'est pas le votre", Session::FLASH_ERROR);
+        } else Session::addMessage('danger', "Veuillez vous connectez pour supprimer votre compte", Session::FLASH_ERROR);
     }
 
     public function modUserForm()
@@ -148,8 +148,8 @@ class UtilisateurController extends AbstractController
                     ],
                     "titrePage" => "user | " . $user->getPsuedo()
                 ];
-            } else echo " Vous ne pouvez modifier un compte qui n'est pas le votre";
-        } else echo " Veuillez vous connectez pour modifier votre profile";
+            } else Session::addMessage('danger', "Vous ne pouvez modifier que votre compte", Session::FLASH_ERROR);
+        } else Session::addMessage('danger', "Veuillez vous connectez pour modifier votre profile", Session::FLASH_ERROR);
     }
     public function modUser()
     {
@@ -162,16 +162,14 @@ class UtilisateurController extends AbstractController
                 $owner = $manUser->findOneById($id);
 
                 if ($owner->getId() == Session::getUtilisateur()->getId() or (Session::getUtilisateur()->getRole() < 2)) {
-                    $psuedo = filter_input(INPUT_POST, "psuedo", FILTER_SANITIZE_STRING);
-                    $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_STRING);
-                    $email1 = filter_input(INPUT_POST, "email1", FILTER_SANITIZE_STRING);
-                    $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_STRING);
-                    $prenom = filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_STRING);
+                    $psuedo = filter_input(INPUT_POST, "psuedo", FILTER_UNSAFE_RAW);
+                    $email = filter_input(INPUT_POST, "email", FILTER_UNSAFE_RAW);
+                    $nom = filter_input(INPUT_POST, "nom", FILTER_UNSAFE_RAW);
+                    $prenom = filter_input(INPUT_POST, "prenom", FILTER_UNSAFE_RAW);
                     $datenaissance = filter_input(INPUT_POST, "datenaissance");
-                    $adresse = filter_input(INPUT_POST, "adresse", FILTER_SANITIZE_STRING);
-                    $pays = filter_input(INPUT_POST, "pays", FILTER_SANITIZE_STRING);
+                    $adresse = filter_input(INPUT_POST, "adresse", FILTER_UNSAFE_RAW);
+                    $pays = filter_input(INPUT_POST, "pays", FILTER_UNSAFE_RAW);
                     if (isset($_FILES["avatar"]) and !empty($_FILES["avatar"]["name"])) {
-
                         $tailleMax = 2097250;
                         $extensionValid = ['jpg', 'jpeg', 'png', 'gif'];
                         if ($_FILES["avatar"]["size"] <= $tailleMax) {
@@ -190,18 +188,19 @@ class UtilisateurController extends AbstractController
                         } else
                             var_dump("votre photo ne doit pas depasser 2Mo!");
                     }
-                    $role = filter_input(INPUT_POST, "role", FILTER_SANITIZE_STRING);
-                    if (($email == $email1) and !empty($email)) {
+                    $role = filter_input(INPUT_POST, "role", FILTER_UNSAFE_RAW);
+                    if (!empty($email)) {
                         $id = (isset($_GET['id'])) ? $_GET['id'] : null;
                         $manager = new UtilisateurManager();
                         $array = ['id' => $id, "psuedo" => $psuedo, "email" => $email, "nom" => $nom, "prenom" => $prenom, "datenaissance" => $datenaissance, "avatar" => $avatar, "adresse" => $adresse, "pays" => $pays];
                         $manager->updateUser($array);
                         if ($manager->updateUser($array)) {
-                            echo "Félicitation, Votre Profile est à jour.";
+                            Session::addMessage("success", "Félicitation, Votre Profile est à jour", Session::FLASH_SUCCESS);
+                            Router::redirectTo("utilisateur", "userDetail", Session::getUtilisateur()->getId());
                         }
-                    } else echo "veuillez revoir votre saisie, CHAMPS MANQUANTS!!, ou emails différentes!!";
-                } else echo " Vous ne pouvez modifier que votre compte ";
-            } else echo " Veuillez vous connectez pour modifier votre profile";
-        } else echo "Champs manquants";
+                    } else Session::addMessage('danger', "tous les champs sont requis!!", Session::FLASH_ERROR);
+                } else Session::addMessage('danger', "Vous ne pouvez modifier que votre compte", Session::FLASH_ERROR);
+            } else Session::addMessage('danger', "Veuillez vous connectez pour modifier votre profile", Session::FLASH_ERROR);
+        } else Session::addMessage('danger', "Champs manquants!!", Session::FLASH_ERROR);
     }
 }

@@ -40,7 +40,7 @@
             );
         }
         public function nbMessageByCategorie($id){
-            $sql= "SELECT c.id, categorie_id, COUNT(m.id_message) AS nb
+            $sql= "SELECT c.id, categorie_id, COUNT(m.id) AS nb
             FROM  sujet s
             LEFT JOIN message m
             on m.sujet_id=s.id 

@@ -21,8 +21,8 @@ use App\Session;
                     <?php foreach ($data['messages'] as $message) {
                         $messageNom = $message->getTitremessage();
                         $messageId = $message->getId();
-                        $datecreation1 = new DateTime($message->getDatecreation());
-                        $datecreation=$datecreation1->format("d/m/Y H:i");
+                        $datecreation = $message->getDatecreation() ? new DateTime($message->getDatecreation()) : "__";
+                        if($datecreation !== "__") $datecreation = $datecreation->format("d/m/Y H:i");
                         $reponse= $message->getReponse();
                         $auteur = $message->getUtilisateur()->getPsuedo();
                         $auteurId = $message->getUtilisateur()->getId();

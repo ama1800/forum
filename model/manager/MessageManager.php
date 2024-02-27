@@ -13,7 +13,7 @@
 
         public function findAll(){
 
-            $sql = "SELECT m.id_message , u.psuedo, titremessage, m.datecreation, reponse, m.utilisateur_id, m.sujet_id
+            $sql = "SELECT m.id , u.psuedo, titremessage, m.datecreation, reponse, m.utilisateur_id, m.sujet_id
                     FROM message m, utilisateur u
                     WHERE m.utilisateur_id=u.id
                     ORDER BY datecreation DESC";
@@ -29,7 +29,7 @@
         public function findOneById($id){
             $sql = "SELECT * 
                     FROM message 
-                    WHERE id_message = :id";
+                    WHERE id = :id";
             return self::getOneOrNullResult(
                 self::select($sql, 
                     ["id" => $id], 
@@ -40,7 +40,7 @@
         }
 
         public function findAllBySujet($id){
-            $sql = "SELECT m.id_message, titremessage, u.psuedo, reponse, datecreation ,m.utilisateur_id 
+            $sql = "SELECT m.id, titremessage, u.psuedo, reponse, datecreation ,m.utilisateur_id 
                     FROM message m, utilisateur u
                     WHERE m.utilisateur_id = u.id and m.sujet_id=:id";
             return self::getResults(
@@ -53,7 +53,7 @@
         }
         public function LatestPosts($pageActuel,$parPage){
 
-            $sql = "SELECT m.id_message, titremessage, m.datecreation, reponse, utilisateur_id, psuedo, m.sujet_id
+            $sql = "SELECT m.id, titremessage, m.datecreation, reponse, utilisateur_id, psuedo, m.sujet_id
             FROM message m
             left join utilisateur u
             on m.utilisateur_id=u.id
@@ -61,7 +61,7 @@
 
             return self::getResults(
                 self::select($sql,
-                [$pageActuel,$parPage], 
+                null, 
                     true
                 ), 
                 self::$classname
@@ -69,7 +69,7 @@
         }
         public function LatestMessages(){
 
-            $sql = "SELECT m.id_message, titremessage, m.datecreation, reponse, utilisateur_id, psuedo, m.sujet_id
+            $sql = "SELECT m.id, titremessage, m.datecreation, reponse, utilisateur_id, psuedo, m.sujet_id
             FROM message m
             left join utilisateur u
             on m.utilisateur_id=u.id
@@ -112,7 +112,7 @@
             );
         }
         public function nbMessageBySujet($id){
-            $sql= "SELECT  s.id, COUNT(m.id_message) AS nbm
+            $sql= "SELECT  s.id, COUNT(m.id) AS nbm
             FROM sujet s 
             LEFT JOIN message m
             ON s.id= m.sujet_id WHERE  s.id= :id
@@ -126,7 +126,7 @@
             );
         }
         public function totalMessages(){
-            $sql="SELECT COUNT(m.id_message) AS nbm
+            $sql="SELECT COUNT(m.id) AS nbm
             FROM  message m";
             return self::getOneOrNullResultInt(
                 self::select($sql, 
@@ -137,7 +137,7 @@
             );
         }
         public function deletePost($id){
-            $sql = "DELETE FROM message WHERE id_message = :id";
+            $sql = "DELETE FROM message WHERE id = :id";
             return self::delete(
                 $sql, 
                 ['id' => $id]
@@ -148,7 +148,7 @@
             $sql="SELECT titresujet FROM sujet s
             LEFT JOIN message m
             ON m.sujet_id= s.id
-            WHERE m.id_message =:id";
+            WHERE m.id =:id";
             return self::getOneOrNullResult(
                 self::select($sql, 
                 ['id' => $id], 
@@ -160,9 +160,9 @@
         
         public function addPost($array){
             $sql=" INSERT INTO  message 
-            (titremessage, reponse, sujet_id, utilisateur_id) 
+            (titremessage, reponse, sujet_id, utilisateur_id, datecreation) 
             values 
-            (:titremessage, :reponse, :sujet_id, :utilisateur_id)";
+            (:titremessage, :reponse, :sujet_id, :utilisateur_id, :datecreation)";
             return self::create(
                 $sql,
                 $array,
@@ -172,8 +172,8 @@
         
         public function messageOwner($id)
         {
-            $sql="SELECT m.id_message, m.utilisateur_id FROM message m, utilisateur u
-            WHERE u.id = m.utilisateur_id AND m.id_message = :id";
+            $sql="SELECT m.id, m.utilisateur_id FROM message m, utilisateur u
+            WHERE u.id = m.utilisateur_id AND m.id = :id";
             return self::getOneOrNullResult(
                 self::select($sql, 
                     ["id" => $id], 
@@ -185,7 +185,7 @@
         public function modPost($array){
             $sql=" UPDATE  message set  
             titremessage= :titremessage, reponse= :reponse, sujet_id= :sujet_id, utilisateur_id= :utilisateur_id
-            where id_message= :id";
+            where id= :id";
             return self::update(
                 $sql,
                 $array
@@ -194,7 +194,7 @@
 
         public function search($q)
         {
-            $sql = $sql=" SELECT id_message, titremessage, reponse, datecreation, m.sujet_id
+            $sql = $sql=" SELECT id, titremessage, reponse, datecreation, m.sujet_id
                     from message m";
                     $mots=explode(" ", $q);
                     $i=0;

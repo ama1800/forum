@@ -24,6 +24,7 @@
                         \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC //retourne un tableau indexé par le nom de la colonne comme retourné dans le jeu de résultats 
                     ]
                 );
+                var_dump("connected!");
                 return $pdo;
             }
             catch(\Exception $e){

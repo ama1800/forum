@@ -16,11 +16,11 @@ use App\Session;
 <body>
     <div class="global">
         <header>
-            <nav class="navbar navbar-expand-sm bg-info navbar-dark">
+            <nav class="navbar navbar-expand-sm bg-info navbar-dark p-3">
                 <div class="logos">
                     <div class="logo">
                         <a class="navbar-brand" href="?ctrl=accueil&method=allCategories">
-                            <img src="<?= IMG_PATH ?>home.png" width="40" height="40" alt="Logo" loading="lazy">
+                            <img src="<?= IMG_PATH ?>home.png" width="30" height="30" alt="Logo" loading="lazy">
                         </a>
                     </div>
                     <form class="form-inline" method="POST" action="?ctrl=forum&method=search">
@@ -31,19 +31,19 @@ use App\Session;
                     <div class="liens">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#"><img width="40" height="40" src="<?= IMG_PATH ?>contact.png" alt="Contact"></a>
+                                <a class="nav-link" href="#"><img width="30" height="30" src="<?= IMG_PATH ?>contact.png" alt="Contact"></a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="#"><img width="40" height="40" src="<?= IMG_PATH ?>help.png" alt="Aide"></a>
+                                <a class="nav-link" href="#"><img width="30" height="30" src="<?= IMG_PATH ?>help.png" alt="Aide"></a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="#"><img width="40" height="40" src="<?= IMG_PATH ?>instagram.png" alt="twitter"></a>
+                                <a class="nav-link" href="#"><img width="30" height="30" src="<?= IMG_PATH ?>instagram.png" alt="twitter"></a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="#"><img width="40" height="40" src="<?= IMG_PATH ?>face.png" alt="facebook"></a>
+                                <a class="nav-link" href="#"><img width="30" height="30" src="<?= IMG_PATH ?>face.png" alt="facebook"></a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="#"><img width="40" height="40" src="<?= IMG_PATH ?>twitter.png" alt="instagram"></a>
+                                <a class="nav-link" href="#"><img width="30" height="30" src="<?= IMG_PATH ?>twitter.png" alt="instagram"></a>
                             </li>
                     </div>
                 </div>
@@ -53,15 +53,16 @@ use App\Session;
                 <img width="100%" height="80" src="<?= IMG_PATH ?>sat.png" alt="">
                 <img width="80" height="80" src="<?= IMG_PATH ?>image.png" alt="">
             </div>
-            <nav class="navbar navbar-expand-sm bg-info navbar-dark">
+            <nav class="navbar navbar-expand-sm bg-info navbar-dark p-2">
                 <div class="logos">
-                    <div class="logo"><?php
-                                        if (Session::getUtilisateur()) { ?>
+                    <div class="logo">
+                        <?php
+                        if (Session::getUtilisateur()) { ?>
                             <a class="navbar-brand" href="?ctrl=utilisateur&method=userDetail&id=<?= Session::getUtilisateur()->getId() ?>">
                                 <?= "<h4>Bienvenue <span style='color: goldenrod;'>" . Session::getUtilisateur()->getPsuedo() . "</span></h4>" . Session::herarchie() ?>
-                                <a href="?ctrl=security&method=logout"><button type="button" class="btn btn-warning">Deconnexion</button></a>
+                                <a href="?ctrl=security&method=logout"><button type="button" class="btn btn-warning mr-2">Deconnexion</button></a>
                             <?php
-                                        } else {   ?>
+                        } else {   ?>
                                 <div class="headerhaut">
                                     <span>Bonjour,<a href="?ctrl=security&method=loginForm"> Se connecter</a></span>
                                     <form action="?ctrl=security&method=login" method="POST">
@@ -113,31 +114,18 @@ use App\Session;
             </select>
         </div>
         <main>
-            <?php
-            // if(Session::getMessage('success'))
-            // {
-            //     echo Session::getMessage('success');
-            //     Session::removeMessage();
-            // }
-            // else if(Session::getMessage('error'))
-            // {
-            //     echo Session::getMessage('error');
-            //     Session::removeMessage();
-            // }
-            // else if(Session::getMessage('notice'))
-            // {
-            //     echo Session::getMessage('notice');
-            //     Session::removeMessage();
-            // }
-            // else echo "toto"
-            // if(empty(Session::getMessage('error')))
-            // {
-            //     echo Session::getMessage('success') ;
-            // }else
-            // echo Session::getMessage('error') ;
 
-            ?>
             <div>
+                <?php
+                $message = match (true) {
+                    Session::flash('success') => Session::flash('success'),
+                    Session::flash('error') => Session::flash('error'),
+                    Session::flash('info') => Session::flash('info'),
+                    Session::flash('warning') => Session::flash('warning'),
+                    default => Session::flash('info')
+                };
+                echo $message;
+                ?>
 
             </div>
             <div id="page">
